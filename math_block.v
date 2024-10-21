@@ -11,8 +11,8 @@ module math_block(
 
      // Always block to handle addition and subtraction
     always @(*) begin
-        AplusB = A + B;      // Sum of A and B
-        AminusB = A - B;     // Difference of A and B
+        AplusB = A + B;      
+        AminusB = A - B;     
     end
 
 endmodule
