@@ -34,7 +34,7 @@ module top
     wire [3:0] AminusB;
 
     // Instantiate the clock divider
-    clock_divider #(.BIT_COUNT(BIT_COUNT)) clk_div_inst (
+    clock_div #(.BIT_COUNT(BIT_COUNT)) clk_div_inst (
         .clk_in(clk),
         .reset(btnC),
         .clk_out(div_clock)
