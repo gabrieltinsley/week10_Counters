@@ -16,7 +16,8 @@ module seven_seg_decoder(
     //   case (anode)
     //      'b1110: selected_sig <= A
     //      'b1101: selected_sig <= B
-    //      ...
+    //      'b1011: selected_sig <= C
+    //      'b0111: selected_sig <= D
     //   endcase
 
     // You will also need a very simple decoder that assigns the segs components
