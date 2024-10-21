@@ -19,4 +19,53 @@ module top
 
     // Do not forget to wire up resets!!
 
+    // Split switches into two 4-bit signals A and B
+    wire [3:0] A = sw[7:4];
+    wire [3:0] B = sw[3:0];
+
+    // Clock divider output
+    wire div_clock;
+
+    // Scanner wires
+    wire [3:0] anode;
+
+    // Math block outputs
+    wire [3:0] AplusB;
+    wire [3:0] AminusB;
+
+    // Instantiate the clock divider
+    clock_divider #(.BIT_COUNT(BIT_COUNT)) clk_div_inst (
+        .clk_in(clk),
+        .reset(btnC),
+        .clk_out(div_clock)
+    );
+
+    // Instantiate the 7-segment scanner (to cycle through the anodes)
+    seven_seg_scanner scanner_inst (
+        .div_clock(div_clock),
+        .reset(btnC),
+        .anode(anode)
+    );
+
+    // Instantiate the math block (performing A + B and A - B)
+    math_block math_inst (
+        .A(A),
+        .B(B),
+        .AplusB(AplusB),
+        .AminusB(AminusB)
+    );
+
+    // Instantiate the seven-segment decoder
+    seven_seg_decoder decoder_inst (
+        .A(A),
+        .B(B),
+        .AplusB(AplusB),
+        .AminusB(AminusB),
+        .anode(anode),
+        .segs(seg)
+    );
+
+    // Connect the anode output to the display anode
+    assign an = anode;
+
 endmodule
