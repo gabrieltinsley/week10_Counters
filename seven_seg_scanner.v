@@ -33,7 +33,6 @@ module seven_seg_scanner(
             2'b01: anode = 4'b1101;  // Anode 1 (RC) is active
             2'b10: anode = 4'b1011;  // Anode 2 (LC) is active
             2'b11: anode = 4'b0111;  // Anode 3 (L) is active
-            default: anode = 4'b1111; // Default state (all off)
         endcase
     end
 
