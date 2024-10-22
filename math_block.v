@@ -15,6 +15,13 @@ module math_block(
     //     AminusB = A - B;     
     // end
 
+    twos_compliment add(
+        .A(A),
+        .B(B),
+        .Y(AplusB)
+    );
+
+    
     
         
 
