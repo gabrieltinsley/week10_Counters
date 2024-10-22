@@ -1,3 +1,21 @@
+module dff(
+    input reset,
+    input clock,
+    input D,
+    output reg Q,
+    output NotQ
+);
+
+    always @(posedge reset, posedge clock) begin
+        if (reset) begin
+            Q <= 0;
+        end else if (clock) begin
+            Q <= D;
+        end
+    end
+     assign NotQ = ~Q;
+endmodule
+
 module clock_div
 #(
     parameter BIT_COUNT = 17
@@ -7,15 +25,25 @@ module clock_div
     input reset,
     output reg div_clock
 );
-
+genvar i;
     reg intreset;
     wire [16:0] intcount;
-
-    counter #(.WIDTH(BIT_COUNT)) count(
-        .clock(clock),
-        .reset(intreset),
-        .count(intcount)
+    
+    wire [17:0] clock_out;
+    wire [17:1] clock_in;
+    
+    assign clock_out[0] = clock;
+    for()begin 
+    dff ins(
+        .clock(clock_out[i-1]
     );
+    end
+
+//    seven_seg_scanner #(BIT_COUNT) count(
+//        .div_clock(clock),
+//        .reset(intreset),
+//        .count(intcount)
+//    );
 
     // Want to create logic that
     // is synchronous to the rest
