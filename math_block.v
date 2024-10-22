@@ -10,22 +10,22 @@ module math_block(
     // previous labs, or set up some behavioral verilog to do the job for you
 
      // Always block to handle addition and subtraction
-    // always @(*) begin
-    //     AplusB = A + B;      
-    //     AminusB = A - B;     
-    // end
+    always @(*) begin
+        AplusB = A + B;      
+        AminusB = A - B;     
+    end
 
-    twos_compliment add(
-        .A(A),
-        .B(B),
-        .Y(AplusB)
-    );
+    // twos_compliment add(
+    //     .A(A),
+    //     .B(B),
+    //     .Y(AplusB)
+    // );
 
-    subtractor sub(
-        .a(A),
-        .b(B),
-        .Y(AminusB)
-    );
+    // subtractor sub(
+    //     .a(A),
+    //     .b(B),
+    //     .Y(AminusB)
+    // );
 
     
     
