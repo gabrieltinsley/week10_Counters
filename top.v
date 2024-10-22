@@ -6,7 +6,8 @@ module top
 (
     input [7:0] sw, // A and B
     input clk, // 100 MHz board clock
-    input btnC, // Reset
+    input btnC, 
+    //input [1:0] addr,// Reset
     output [3:0] an, // 7seg anodes
     output [6:0] seg // 7seg segments
 );
@@ -20,14 +21,16 @@ module top
     // Do not forget to wire up resets!!
 
     // Split switches into two 4-bit signals A and B
-    wire [3:0] A = sw[7:4];
-    wire [3:0] B = sw[3:0];
+    wire [3:0] A = sw[3:0];
+    wire [3:0] B = sw[7:4];
 
     // Clock divider output
     wire div_clock;
 
     // Scanner wires
     wire [3:0] anode;
+    
+    wire [1:0] addr;
 
     // Math block outputs
     wire [3:0] AplusB;
@@ -35,16 +38,16 @@ module top
 
     // Instantiate the clock divider
     clock_div #(.BIT_COUNT(BIT_COUNT)) clk_div_inst (
-        .clk_in(clk),
+        .clock(clk),
         .reset(btnC),
-        .clk_out(div_clock)
+        .div_clock(div_clock)
     );
 
     // Instantiate the 7-segment scanner (to cycle through the anodes)
     seven_seg_scanner scanner_inst (
         .div_clock(div_clock),
         .reset(btnC),
-        .anode(anode)
+        .anode(an)
     );
 
     // Instantiate the math block (performing A + B and A - B)
@@ -61,11 +64,19 @@ module top
         .B(B),
         .AplusB(AplusB),
         .AminusB(AminusB),
-        .anode(anode),
+        .anode(an),
         .segs(seg)
     );
 
     // Connect the anode output to the display anode
-    assign an = anode;
+//    assign an = anode;
+//    always @(*) begin 
+//        case(addr)
+//        2'b00: an <= anode[0];
+//        2'b01: an <= anode[1];
+//        2'b10: an <= anode[2];
+//        2'b11: an <= anode[3];
+//        endcase
+//   end
 
 endmodule
