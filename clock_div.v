@@ -27,7 +27,7 @@ module clock_div
             // and reset out clock output
             intreset = 1;
             div_clock = 0;
-        end else if (intcount == 100000) begin
+        end else if (intcount == 2) begin
             // Otherwise, if the count is equal
             // to our tickover point, then we
             // need to reset the counter and
