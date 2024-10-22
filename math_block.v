@@ -24,7 +24,7 @@ module math_block(
     subtractor sub(
         .a(A),
         .b(B),
-        .Cout(AminusB)
+        .Y(AminusB)
     );
 
     
