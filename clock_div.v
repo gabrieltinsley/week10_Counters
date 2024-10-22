@@ -11,7 +11,7 @@ module clock_div
     reg intreset;
     wire [16:0] intcount;
 
-    counter #(.WIDTH(17)) count(
+    counter #(.WIDTH(BIT_COUNT)) count(
         .clock(clock),
         .reset(intreset),
         .count(intcount)
