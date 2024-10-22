@@ -21,6 +21,12 @@ module math_block(
         .Y(AplusB)
     );
 
+    subtractor sub(
+        .a(A),
+        .b(B),
+        .Cout(AminusB)
+    );
+
     
     
         
