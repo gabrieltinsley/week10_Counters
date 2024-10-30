@@ -33,7 +33,8 @@ genvar i;
     wire [17:1] clock_in;
     
     assign clock_out[0] = clock;
-    for()begin 
+    generate
+        for(i = 0; i < BIT_COUNT; i = i + 1)begin 
     dff ins(
         .clock(clock_out[i-1]
     );
