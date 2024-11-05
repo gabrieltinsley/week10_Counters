@@ -10,7 +10,7 @@ module math_block(
     // previous labs, or set up some behavioral verilog to do the job for you
 
      // Always block to handle addition and subtraction
-    always @(*) begin
+    always @(A, B) begin
         AplusB = A + B;      
         AminusB = A - B;     
     end
