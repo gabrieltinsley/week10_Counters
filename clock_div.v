@@ -26,29 +26,26 @@ module clock_div
     output reg div_clock
 );
 
-    wire [DIVIDE_BY-1:0] qOut;
+    wire [DIVIDE_BY:0] qOut;
+    wire [DIVIDE_BY:1] qin;
 
-    dff firstDff(
-        .reset(reset)
-        .clock(clock)
-        .D(qOut[0])
-        .Q(qOut[0])
-    );
+   assign qOut[0] = clock;
 
     genvar i;
 
     generate
-        for (i = 0; i < DIVIDE_BY; i = i + 1) begin
+        for (i = 1; i <= DIVIDE_BY; i = i + 1) begin
             dff dff_inst(
                 .reset(reset),
-                .clock(~qOut[i-1]),
-                .D(qOut[i+1])
-                .Q(qOut[i+1])
+                .clock(qOut[i-1]),
+                .D(qin[i]),
+                .Q(qOut[i]),
+                .NotQ(qin[i])
             );
 
         end
     endgenerate
-
-    assign div_clock = qOut[DIVIDE_BY - 1];
-
+always @(*) begin
+    div_clock = qOut[DIVIDE_BY];
+end
 endmodule
