@@ -11,6 +11,8 @@ module seven_seg_decoder(
     // are going to do here is simply display the correct four bit number
     // according to the table provided in the lab deliverables section
 
+    wire [3:0] selected_sig;
+
     // Recommended you do a simple behavioral implementation:
     always @(*) begin
       case (anode)
