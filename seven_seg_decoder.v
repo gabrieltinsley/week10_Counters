@@ -10,18 +10,18 @@ module seven_seg_decoder(
     // This module should be purely combinatorial -- no reset required. What we
     // are going to do here is simply display the correct four bit number
     // according to the table provided in the lab deliverables section
-
-    wire [3:0] selected_sig;
+    
+    reg [3:0] selected_sig;
 
     // Recommended you do a simple behavioral implementation:
     always @(*) begin
       case (anode)
-         'b1110: selected_sig <= A;
-         'b1101: selected_sig <= B;
-         'b1011: selected_sig <= AplusB;
-         'b0111: selected_sig <= AminusB;
+         4'b1110: selected_sig <= A;
+         4'b1101: selected_sig <= B;
+         4'b1011: selected_sig <= AplusB;
+         4'b0111: selected_sig <= AminusB;
       endcase
-
+    end
     // You will also need a very simple decoder that assigns the segs components
     // based on the 4 bit input number to hexidecimal digit
 
@@ -44,8 +44,8 @@ module seven_seg_decoder(
             4'b1100: segs = 7'b1000110;  // C
             4'b1101: segs = 7'b0100001;  // D
             4'b1110: segs = 7'b0000110;  // E
-            4'b1111: segs = 7'b0001110;  // F       
+            4'b1111: segs = 7'b0001110;  // F           
         endcase
-    end
-
-endmodule
+       end
+       
+  endmodule
