@@ -7,7 +7,6 @@ module top
     input [7:0] sw, // A and B
     input clk, // 100 MHz board clock
     input btnC, 
-    //input [1:0] addr,// Reset
     output [3:0] an, // 7seg anodes
     output [6:0] seg // 7seg segments
 );
@@ -19,28 +18,31 @@ module top
     // Wire up the math block into the decoder
 
     // Do not forget to wire up resets!!
-
-    // Split switches into two 4-bit signals A and B
-    wire [3:0] A = sw[3:0];
-    wire [3:0] B = sw[7:4];
-
     // Clock divider output
     wire div_clock;
-
-    // Scanner wires
-    wire [3:0] anode;
     
-    wire [1:0] addr;
-
-    // Math block outputs
-    wire [3:0] AplusB;
-    wire [3:0] AminusB;
-
     // Instantiate the clock divider
-    clock_div #(.BIT_COUNT(BIT_COUNT)) clk_div_inst (
+    clock_div #(.DIVIDE_BY(BIT_COUNT)) clk_div_inst (
         .clock(clk),
         .reset(btnC),
         .div_clock(div_clock)
+    );
+
+
+    // Math block outputs
+    // Split switches into two 4-bit signals A and B
+    wire [3:0] A = sw[3:0];
+    wire [3:0] B = sw[7:4];
+    wire [3:0] AplusB;
+    wire [3:0] AminusB;
+
+    
+       // Instantiate the math block (performing A + B and A - B)
+    math_block math_inst (
+        .A(A),
+        .B(B),
+        .AplusB(AplusB),
+        .AminusB(AminusB)
     );
 
     // Instantiate the 7-segment scanner (to cycle through the anodes)
@@ -50,13 +52,6 @@ module top
         .anode(an)
     );
 
-    // Instantiate the math block (performing A + B and A - B)
-    math_block math_inst (
-        .A(A),
-        .B(B),
-        .AplusB(AplusB),
-        .AminusB(AminusB)
-    );
 
     // Instantiate the seven-segment decoder
     seven_seg_decoder decoder_inst (
@@ -64,19 +59,8 @@ module top
         .B(B),
         .AplusB(AplusB),
         .AminusB(AminusB),
-        .anode(an),
-        .segs(seg)
+        .anode(an)
     );
 
-    // Connect the anode output to the display anode
-//    assign an = anode;
-//    always @(*) begin 
-//        case(addr)
-//        2'b00: an <= anode[0];
-//        2'b01: an <= anode[1];
-//        2'b10: an <= anode[2];
-//        2'b11: an <= anode[3];
-//        endcase
-//   end
 
 endmodule
