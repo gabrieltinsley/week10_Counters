@@ -31,16 +31,15 @@ module top
 
     // Math block outputs
     // Split switches into two 4-bit signals A and B
-    wire [3:0] A = sw[3:0];
-    wire [3:0] B = sw[7:4];
+   
     wire [3:0] AplusB;
     wire [3:0] AminusB;
 
     
        // Instantiate the math block (performing A + B and A - B)
     math_block math_inst (
-        .A(A),
-        .B(B),
+        .A(sw[3:0]),
+        .B(sw[7:4]),
         .AplusB(AplusB),
         .AminusB(AminusB)
     );
@@ -55,11 +54,12 @@ module top
 
     // Instantiate the seven-segment decoder
     seven_seg_decoder decoder_inst (
-        .A(A),
-        .B(B),
+       .A(sw[3:0]),
+        .B(sw[7:4]),
         .AplusB(AplusB),
         .AminusB(AminusB),
-        .anode(an)
+        .anode(an),
+        .segs(seg)
     );
 
 
